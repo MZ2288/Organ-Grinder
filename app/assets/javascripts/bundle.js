@@ -26628,12 +26628,73 @@
 
 /***/ },
 /* 186 */,
-/* 187 */,
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Key = __webpack_require__(183),
+	    KeyStore = __webpack_require__(160),
+	    KeyAction = __webpack_require__(166);
+	
+	var Track = function (attributes) {
+	  this.trackName = attributes.trackName;
+	  this.roll = attributes.roll;
+	};
+	
+	Track.prototype.startRecording = function () {
+	  this.roll = [];
+	  this.recordingTime = new Date();
+	  this.interval;
+	};
+	
+	Track.prototype.addNotes = function (playingNotes) {
+	  var time = new Date();
+	  var snapShot = {
+	    timeSlice: time.getTime() - this.recordingTime.getTime(),
+	    notes: playingNotes
+	  };
+	  this.roll.push(snapShot);
+	};
+	
+	Track.prototype.stopRecording = function () {
+	  this.addNotes([]);
+	  debugger;
+	};
+	
+	Track.prototype.play = function () {
+	  if (this.interval) {
+	    return;
+	  } else {
+	    var playbackStartTime = Date.now();
+	    var currentNote = 0;
+	    this.interval = setInterval((function () {
+	      if (currentNote < this.roll.length) {
+	        if (Date.now() - playbackStartTime > this.roll[currentNote].timeSlice) {
+	
+	          currentNote++;
+	        } else {}
+	      } else {
+	        clearInterval(this.interval);
+	        this.interval = null;
+	      }
+	    }).bind(this), 10);
+	  }
+	  // count = 0
+	  // while (count < this.roll.length ) {
+	  //   if ( Date.now() - playBackStarttime > timeSlice ) {
+	  //     count ++
+	  //
+	  //   }
+	  // }
+	};
+	
+	module.exports = Track;
+
+/***/ },
 /* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1),
-	    Track = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../util/Track.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
+	    Track = __webpack_require__(187),
 	    KeyStore = __webpack_require__(160),
 	    Key = __webpack_require__(183);
 	

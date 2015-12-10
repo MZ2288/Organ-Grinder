@@ -25,6 +25,7 @@ Track.prototype.addNotes = function (playingNotes) {
 
 Track.prototype.stopRecording = function () {
   this.addNotes([]);
+  debugger
 };
 
 Track.prototype.play = function() {
@@ -33,20 +34,19 @@ Track.prototype.play = function() {
   } else {
     var playbackStartTime = Date.now();
     var currentNote = 0;
-    var this.interval = setInterval(function() {
+    this.interval = setInterval(function() {
       if (currentNote < this.roll.length) {
         if ((Date.now() - playbackStartTime) > (this.roll[currentNote].timeSlice)) {
 
           currentNote++;
         } else {
-
-
+          
         }
       } else {
         clearInterval(this.interval);
         this.interval = null;
       }
-    }.bind(this), 10)
+    }.bind(this), 10);
   }
   // count = 0
   // while (count < this.roll.length ) {
