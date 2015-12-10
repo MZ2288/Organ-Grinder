@@ -19701,6 +19701,9 @@
 	    case "RECEIVE_KEY_RELEASE":
 	      removeKeyReleased(payload.keyReleased);
 	      break;
+	    case "RECEIVED_KEY_PLAYBACK":
+	      addKeyPress(payload.key);
+	      break;
 	  }
 	};
 	
@@ -19723,6 +19726,10 @@
 	  KeyStore.__emitChange();
 	  console.log(_keysBeingPlayed);
 	};
+	
+	// var playKey = function(key) {
+	//
+	// };
 	
 	module.exports = KeyStore;
 
@@ -20105,6 +20112,13 @@
 	    AppDispatcher.dispatch({
 	      actionType: "RECEIVE_KEY_RELEASE",
 	      keyReleased: key
+	    });
+	  },
+	
+	  keyPlayBack: function (key) {
+	    AppDispatcher.dispatch({
+	      actionType: "RECEIVED_KEY_PLAYBACK",
+	      key: key
 	    });
 	  }
 	};
@@ -26614,47 +26628,12 @@
 
 /***/ },
 /* 186 */,
-/* 187 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Key = __webpack_require__(183);
-	
-	var Track = function (attributes) {
-	  this.trackName = attributes.trackName;
-	  this.roll = attributes.roll;
-	};
-	
-	Track.prototype.startRecording = function () {
-	  this.roll = [];
-	  this.recordingTime = new Date();
-	};
-	
-	Track.prototype.addNotes = function (playingNotes) {
-	  var time = new Date();
-	  var snapShot = {
-	    timeSlice: time.getTime() - this.recordingTime.getTime(),
-	    notes: playingNotes
-	  };
-	  this.roll.push(snapShot);
-	};
-	
-	Track.prototype.stopRecording = function () {
-	  this.addNotes([]);
-	};
-	
-	Track.prototype.play = function () {
-	  var intervalId = setInterval(function () {}, 10);
-	  clearInterval(intervalId);
-	};
-	
-	module.exports = Track;
-
-/***/ },
+/* 187 */,
 /* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1),
-	    Track = __webpack_require__(187),
+	    Track = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../util/Track.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
 	    KeyStore = __webpack_require__(160),
 	    Key = __webpack_require__(183);
 	

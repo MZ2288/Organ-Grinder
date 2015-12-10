@@ -1,4 +1,7 @@
-  var Key = require('../components/key.jsx');
+  var Key = require('../components/key.jsx'),
+      KeyStore = require('../stores/KeyStore'),
+      KeyAction = require('../actions/KeyActions.js');
+
 
 var Track = function(attributes) {
   this.trackName = attributes.trackName;
@@ -8,6 +11,7 @@ var Track = function(attributes) {
 Track.prototype.startRecording = function() {
   this.roll = [];
   this.recordingTime = new Date();
+  this.interval;
 };
 
 Track.prototype.addNotes = function (playingNotes) {
@@ -24,10 +28,33 @@ Track.prototype.stopRecording = function () {
 };
 
 Track.prototype.play = function() {
-  var intervalId = setInterval(function() {
+  if (this.interval) {
+    return;
+  } else {
+    var playbackStartTime = Date.now();
+    var currentNote = 0;
+    var this.interval = setInterval(function() {
+      if (currentNote < this.roll.length) {
+        if ((Date.now() - playbackStartTime) > (this.roll[currentNote].timeSlice)) {
 
-  }, 10);
-  clearInterval(intervalId);
+          currentNote++;
+        } else {
+
+
+        }
+      } else {
+        clearInterval(this.interval);
+        this.interval = null;
+      }
+    }.bind(this), 10)
+  }
+  // count = 0
+  // while (count < this.roll.length ) {
+  //   if ( Date.now() - playBackStarttime > timeSlice ) {
+  //     count ++
+  //
+  //   }
+  // }
 };
 
 module.exports = Track;

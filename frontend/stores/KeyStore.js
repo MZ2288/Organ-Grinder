@@ -9,8 +9,11 @@ KeyStore.__onDispatch = function(payload) {
       addKeyPress(payload.keyPressed);
       break;
     case "RECEIVE_KEY_RELEASE":
-     removeKeyReleased(payload.keyReleased);
-     break;
+      removeKeyReleased(payload.keyReleased);
+      break;
+    case "RECEIVED_KEY_PLAYBACK":
+      addKeyPress(payload.key);
+      break;
   }
 };
 
@@ -33,5 +36,9 @@ var removeKeyReleased = function (keyReleased) {
   KeyStore.__emitChange();
   console.log(_keysBeingPlayed);
 };
+
+// var playKey = function(key) {
+//
+// };
 
 module.exports = KeyStore;

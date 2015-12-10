@@ -14,6 +14,13 @@ var KeyAction = ({
       actionType: "RECEIVE_KEY_RELEASE",
       keyReleased: key
     });
+  },
+
+  keyPlayBack: function(key) {
+    AppDispatcher.dispatch({
+      actionType: "RECEIVED_KEY_PLAYBACK",
+      key: key
+    });
   }
 });
 
